@@ -18,19 +18,15 @@
 // Date: December 28, 2019
 // Author: anromanof
 
+
 // 1. Pre-processor Directives Section
 #include <mcp_can.h>
 #include <SPI.h>
 
+
 // 2. Declarations Section
 //   Global Variables
 const int SPI_CS_PIN = 10;          // explicit initialization of CS_PIN for Arduino UNO
-
-unsigned char buf[8];               // buffer for received messages
-unsigned char msg_len;              // length of received messages
-unsigned int rcvID;                 // ID of sender of recieved messages
-unsigned long int rcvTime;          // time of recieving since the Arduino powerup
-
 MCP_CAN node(SPI_CS_PIN);
 
 
@@ -54,11 +50,16 @@ void setup() {
   
   Serial.println("time\tID\tB0\tB1\tB2\tB3\tB4\tB5\tB6\tB7");
 
-
 }
+
 
 // 4. Main body: Broadcasting received messages if they are from 0x7FF
 void loop() {
+  
+  unsigned char buf[8];               // buffer for received messages
+  unsigned char msg_len;              // length of received messages
+  unsigned int rcvID;                 // ID of sender of recieved messages
+  unsigned long int rcvTime;          // time of recieving since the Arduino powerup
   
   if (CAN_MSGAVAIL == node.checkReceive()){
     
@@ -87,6 +88,5 @@ void loop() {
       }
       Serial.println();
     }
-
 }
 
