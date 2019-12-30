@@ -47,3 +47,4 @@ void loop() {
   node.sendMsgBuf(ID, 0, 8, buf);              // 0 means we use 11-bit ID, 8 - length of the message, buf - message
   delay(15); 
 }
+
