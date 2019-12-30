@@ -1,6 +1,7 @@
 // 0.Documentation Section 
 // sender.ino
 
+// Sends a message to the CAN bus
 // Runs on Arduino UNO 
 // Output to MCP2515 CAN Controller, using SPI
 // Standard Arduino SPI pins:
