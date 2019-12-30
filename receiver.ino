@@ -35,7 +35,7 @@ void setup() {
   
   Serial.begin(115200);             // allow monitoring using Arduino Serial Monitor
   
-  while(CAN_OK != node.begin(CAN_500KBPS)){             // function begin(rate) returns CAN_OK if successfull
+  while(CAN_OK != node.begin(CAN_500KBPS)){             // function begin(rate) returns CAN_OK if successful
     Serial.println("CAN bus failed to initialize");
     Serial.println("Retrying...");
     delay(200);
