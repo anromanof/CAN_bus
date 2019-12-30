@@ -9,7 +9,7 @@
 // SO - 12
 // SI - 11
 // SCK - 13
-// Otline:
+// Outline:
 // 1) Create and Initilize an instance of type MCP_CAN with rate 500 KBPS
 // 2) If message is being sent to CAN BUS, broadcast it to Arduino Serial Moninor
 // Note: we can use MCP_CAN.init_Mask() and MCP_CAN.node.init_Filt() to filter received messages
