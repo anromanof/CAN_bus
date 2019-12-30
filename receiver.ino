@@ -50,7 +50,7 @@ void setup() {
   // Removing these three lines will allow receiving all messages from CAN bus
   node.init_Mask(0, 0, 0x7FF);      
   node.init_Mask(1, 0, 0x7FF);      // We need to initilize both masks to avoid errors related to different values in masks
-  node.init_Filt(0, 0, 0x7F4);      
+  node.init_Filt(0, 0, 0x7FF);      
   
   Serial.println("time\tID\tB0\tB1\tB2\tB3\tB4\tB5\tB6\tB7");
 
