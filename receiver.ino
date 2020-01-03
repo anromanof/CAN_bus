@@ -9,7 +9,7 @@
 // SO - 12
 // SI - 11
 // SCK - 13
-// Otline:
+// Outline:
 // 1) Create and Initilize an instance of type MCP_CAN with rate 500 KBPS
 // 2) If message is being sent to CAN BUS, broadcast it to Arduino Serial Moninor
 // Note: we can use MCP_CAN.init_Mask() and MCP_CAN.node.init_Filt() to filter received messages
@@ -35,7 +35,7 @@ void setup() {
   
   Serial.begin(115200);             // allow monitoring using Arduino Serial Monitor
   
-  while(CAN_OK != node.begin(CAN_500KBPS)){             // function begin(rate) returns CAN_OK if successfull
+  while(CAN_OK != node.begin(CAN_500KBPS)){             // function begin(rate) returns CAN_OK if successful
     Serial.println("CAN bus failed to initialize");
     Serial.println("Retrying...");
     delay(200);
