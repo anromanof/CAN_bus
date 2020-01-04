@@ -2,7 +2,7 @@ import serial
 import time
 
 
-def Init(device_name, rate):
+def init(device_name, rate):
     while True:
         try:
             device = serial.Serial(device_name, rate)
@@ -14,9 +14,12 @@ def Init(device_name, rate):
             time.sleep(5)
 
 
-def is_buf_free():
-    return True
-
+def wait_till_free_buf(device):
+    while True:
+        val = device.read(8)
+        if val == "11111111".encode():
+            return
+        time.sleep(0.1)
 
 def msg_gnrtr(name):
     with open(name, "r") as input_data:
@@ -27,46 +30,27 @@ def msg_gnrtr(name):
             yield str.encode(msg)
 
 
-
-"""while 1:
-    val = ser.read(8).decode() #TODO: remove autoreset
-    print(val, end = "")
-    val = next(r)
-    ser.write(val) #TODO: HELLO Message IDEA 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 because no asci character has it"""
-
 if __name__ == '__main__':
 
-    text = msg_gnrtr("Crime_Punishment.txt")
     while True:
-        device = Init("/dev/tty.usbmodem14101", 115200)
+        device = init("/dev/tty.usbmodem14101", 115200)
+        print("\nSending...")
 
-        EOF = False
-        print("\nSending:")
+        Error_occurred = False
+        for msg in msg_gnrtr("Crime_Punishment.txt"):
+            try:
+                wait_till_free_buf(device)
+                device.write(msg)
+            except:
+                print("\nError occurred while sending! File will be resent.\n")
+                Error_occurred = True
+                break
 
-        while not EOF:
-            if is_buf_free():
-                try:
-                    msg = next(text, None)
-                    if msg is not None:
-                        device.write(msg)
-                        time.sleep(0.05)
-                        print(msg.decode(), end= '')
-                    else:
-                        EOF = True
-                        print()
-                        print("File was sent successfully!")
-                except:
-                    print()
-                    print("Error occurred while sending! Check the connection.")
-                    break
-        if EOF:
+
+        if Error_occurred:
+            continue
+        else:
+            print("\nFile was sent successfully!")
             break
-
-
-    """for msg in msg_gnrtr("Crime_Punishment.txt"):
-        out = ser.read(8).decode()
-        print(out, end="")
-        ser.write(msg)
-        time.sleep(0.01)"""
 
     pass
