@@ -43,9 +43,15 @@ void setup() {
   Serial.println("CAN bus initialized successfuly!");
 }
 
-// 4. Main body: Sending message every 15 ms
-void loop() {
-  node.sendMsgBuf(ID, 0, 8, buf);              // 0 means we use 11-bit ID, 8 - length of the message, buf - message
-  delay(15); 
-}
 
+// 4. Main body: Sending message from the Serial port whenever ready
+void loop() {
+  if ((64 - Serial.available()) >= 8){
+    Serial.print("11111111");
+    }
+  if (Serial.available()){
+    int len = Serial.readBytes(buf, 8);
+    node.sendMsgBuf(ID, 0, len, buf);              // 0 means we use 11-bit ID, 8 - length of the message, buf - message
+  }    
+  
+}
