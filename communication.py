@@ -10,6 +10,7 @@ class Communication:
             try:
                 self.node = serial.Serial(device_name, rate, timeout=1, write_timeout=0.5)
                 self.node.reset_output_buffer()
+                self.node.reset_input_buffer()
                 time.sleep(3)
                 print("Device " + device_name + " was connected successfully.")
                 break
