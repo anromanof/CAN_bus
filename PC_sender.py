@@ -4,7 +4,7 @@ import time
 
 class Communication:
     def __init__(self, device_name, rate):
-        self.delay = 0.01
+        self.delay = 0.001
         self.rate = rate
         self.name = device_name
         while True:
@@ -25,7 +25,7 @@ class Communication:
                 msg = input_data.read(8)
                 if msg == "":
                     break
-                yield str.encode(msg)
+                yield msg.encode(encoding='UTF-8')
 
     def send_message(self, msg):
         if msg is not None:
@@ -59,8 +59,6 @@ class Communication:
                 time.sleep(5)
             except:
                 print("\n!!!Unexpected error occurred!!!\n")
-
-
 
     def handle_disconnection(self, msg):
         print("\nDevice was disconnected! Please plug it back.\n")
