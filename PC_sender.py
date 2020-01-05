@@ -1,23 +1,13 @@
 import serial
 import time
+from communication import Communication
 
 
-class Communication:
+class Submission(Communication):
+
     def __init__(self, device_name, rate):
-        self.delay = 0.001
-        self.rate = rate
-        self.name = device_name
-        while True:
-            try:
-                self.node = serial.Serial(device_name, rate, write_timeout=0.5)
-                self.node.reset_output_buffer()
-                time.sleep(3)
-                print("Device " + device_name + " was connected successfully.")
-                break
-            except serial.SerialException:
-                print("Divice " + device_name + " is busy or not connected.")
-                print("Retrying...\n")
-                time.sleep(5)
+        Communication.__init__(self, device_name, rate)
+        self.delay = 0.001  # seconds
 
     def msg_gnrtr(self, name):
         with open(name, "r") as input_data:
@@ -25,45 +15,29 @@ class Communication:
                 msg = input_data.read(8)
                 if msg == "":
                     break
-                yield msg.encode(encoding='UTF-8')
+                yield msg
 
     def send_message(self, msg):
         if msg is not None:
             try:
-                self.node.write(msg)
+                self.node.write(msg.encode(encoding='UTF-8'))
                 time.sleep(self.delay)
             except serial.serialutil.SerialTimeoutException:
-                self.handle_congestion(msg)
+                self.handle_congestion()
+                self.send_message(msg)
             except serial.SerialException:
-                self.handle_disconnection(msg)
+                self.handle_disconnection()
+                self.send_message(msg)
             except:
-                print("\n!!!Unexpected error occurred!!!\n")
+                print("\n!!!Unexpected error occurred in send_message()!!!\n")
             finally:
                 return False
         return True
 
-    def handle_congestion(self, msg):
+    def handle_congestion(self):
         print("\nNetwork is congested! Sending rate is decreased.\n")
         self.delay *= 2
         time.sleep(1)
-        self.send_message(msg)
-
-    def connect(self):
-        while True:
-            try:
-                self.node = serial.Serial(self.name, self.rate, write_timeout=0.5)
-                print("Connection established\n")
-                return
-            except serial.SerialException:
-                print("Retrying...")
-                time.sleep(5)
-            except:
-                print("\n!!!Unexpected error occurred!!!\n")
-
-    def handle_disconnection(self, msg):
-        print("\nDevice was disconnected! Please plug it back.\n")
-        self.connect()
-        self.send_message(msg)
 
     def send_text(self, file_name):
         print("Sending...\n")
@@ -76,7 +50,7 @@ class Communication:
 
 
 if __name__ == '__main__':
-    node = Communication("/dev/tty.usbmodem14101", 115200)
+    node = Submission("/dev/tty.usbmodem14101", 115200)
     file_name = input("What text file would you like to transmit?\n")
     node.send_text(file_name)
     pass

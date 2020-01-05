@@ -1,13 +1,22 @@
 import serial
-import binascii
-import codecs
-
-decode_hex = codecs.getdecoder("hex_codec")
-ser = serial.Serial("/dev/tty.usbmodem14301", 115200)
+import time
+from communication import Communication
 
 
-while 1:
-    val = ser.read(8).decode() #TODO: remove autoreset
-    #n = int(val, 2)
-    #n.to_bytes((n.bit_length() + 7) // 8, 'big').decode()
-    print(val, end="")
+class Receiving(Communication):
+    def __init__(self, device_name, rate, hello_interval = 1):
+        Communication.__init__(self, device_name, rate)
+        self.last_hello = None
+        self.hello_interval = hello_interval #second
+
+    def broadcast(self):
+        while True:
+            val = self.node.read().decode(encoding='UTF-8')
+            print(val, end="")
+
+
+if __name__ == '__main__':
+    node = Receiving("/dev/tty.usbmodem14301", 115200)
+    node.broadcast()
+    pass
+
