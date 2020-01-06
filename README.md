@@ -10,7 +10,7 @@ General files:
 
 Dostoevsky data flow chart: Crime_Punishment.txt -> PC_sender -> serial_port -> arduino_transmitter -> CAN_BUS -> arduino_receiver -> serial_port -> PC_receiver
 
-Dostoevsky files:
+Dostoevsky files:  
 communication.py  
 PC_receiver.py  
 PC_sender.py  
