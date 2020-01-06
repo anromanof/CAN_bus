@@ -11,7 +11,7 @@
 // Outline:
 // 1) Create a unique 11-bit sender ID - 0x7FF
 // 2) Create and Initialize an instance of type MCP_CAN with rate 500 KBPS
-// 3) Send any information arrived from Serial to CAN bus in 8 bit messages
+// 3) Send any information arrived from Serial to CAN bus in 8 byte messages
 
 // Date: January 5, 2019
 // Author: anromanof
