@@ -43,7 +43,7 @@ class Receiving(Communication):
             except serial.SerialException:
                 self.handle_disconnection()
             except:
-                print("\n!!!Unexpected error occurred in send_message()!!!\n")
+                print("\n!!!Unexpected error occurred in broadcast()!!!\n")
 
 
 if __name__ == '__main__':
