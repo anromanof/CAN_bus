@@ -25,7 +25,7 @@ class Submission(Communication):
         :param rate: used baud rate
         """
         Communication.__init__(self, device_name, rate)
-        self.delay = 0.001  # small delay between sending messages to avoid packet drops
+        self.delay = 1.2/rate  # small delay between sending messages to avoid packet drops
 
     def msg_gnrtr(self, name):
         """
@@ -68,7 +68,7 @@ class Submission(Communication):
         :return: None
         """
         print("\nNetwork is congested! Sending rate is decreased.\n")
-        self.delay *= 2
+        self.delay *= 1.2
         time.sleep(1)
 
     def send_text(self, file_name):
