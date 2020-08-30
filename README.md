@@ -18,6 +18,6 @@ novel_receiver.ino
 novel_sender.ino  
 
 Here is how devices should be connected:
-![Circuit](https://www.electronicshub.org/wp-content/uploads/2018/08/Arduino-MCP2515-CAN-Bus-Interface-Circuit-Diagram.jpg)
+![Circuit](https://www.electronicshub.org/wp-content/uploads/2018/08/Arduino-MCP2515-CAN-Bus-Interface-Circuit-Diagram.jpg )
 
 Source: https://www.electronicshub.org/arduino-mcp2515-can-bus-tutorial/
